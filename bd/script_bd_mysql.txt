@@ -1,0 +1,68 @@
+CREATE DATABASE bd_papp;
+
+CREATE TABLE cliente (
+	cte_id INT AUTO_INCREMENT,
+    	cte_documento INT NOT NULL,
+	cte_nombre VARCHAR(250) NOT NULL,
+	cte_direccion VARCHAR(250) NOT NULL,
+	cte_fecha_nacimiento DATE NOT NULL,
+	PRIMARY KEY (cte_id)
+);
+
+CREATE TABLE cuenta_tipo (
+	ctp_id INT AUTO_INCREMENT,
+    	ctp_nombre VARCHAR(250) NOT NULL,
+	PRIMARY KEY (ctp_id)
+);
+
+CREATE TABLE cuenta (
+	cta_id INT AUTO_INCREMENT,	
+    	cta_tipo INT NOT NULL,
+	cta_cliente INT NOT NULL,
+	PRIMARY KEY (cta_id),
+	FOREIGN KEY (cta_cliente) REFERENCES cliente(cte_id),
+	FOREIGN KEY (cta_tipo) REFERENCES cuenta_tipo(ctt_id)
+);
+
+CREATE TABLE cuenta_tipo_transaccion (
+	ctt_id INT AUTO_INCREMENT,
+    	ctt_nombre VARCHAR(250) NOT NULL,
+	PRIMARY KEY (ctt_id)
+);
+
+CREATE TABLE cuenta_transaccion (
+	ctr_id INT AUTO_INCREMENT,
+	ctr_cuenta INT NOT NULL,
+	ctr_tipo_transaccion INT NOT NULL,
+	ctr_cuenta_transaccion INT NOT NULL,
+	ctr_monto INT NOT NULL,
+	ctr_fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (ctr_id),
+	FOREIGN KEY (ctr_cuenta) REFERENCES cuenta(cta_id),
+	FOREIGN KEY (ctr_cuenta_transaccion) REFERENCES cuenta(cta_id)
+);
+
+CREATE TABLE tarjeta_debito (
+	tjd_numero VARCHAR(250),	
+    	tjd_cuenta INT NOT NULL,	
+	PRIMARY KEY (tjd_numero),
+	FOREIGN KEY (tjd_cuenta) REFERENCES cuenta(cta_id)
+);
+
+INSERT INTO cliente (cte_documento, cte_nombre, cte_direccion, cte_fecha_nacimiento)
+VALUES (1234, 'Pablo', 'Calle 123 # 19', '1990-04-16'), (56678, 'Pedro', 'Diag 20 # 50 -76', '1942-11-10');
+
+INSERT INTO cuenta_tipo ( ctp_nombre )
+VALUES ('Ahorros'), ('Corriente');
+
+INSERT INTO cuenta_tipo_transaccion ( ctt_nombre )
+VALUES ('Entrada'), ('Salida');
+
+INSERT INTO cuenta (cta_tipo, cta_cliente)
+VALUES (1, 1);
+
+INSERT INTO tarjeta_debito (tjd_numero, tjd_cuenta)
+VALUES ('9988-5689-5678-6789', 1);
+
+INSERT INTO cuenta_transaccion (ctr_cuenta, ctr_tipo_transaccion, ctr_cuenta_transaccion, ctr_monto)
+VALUES (1, 1, 1, 250000);

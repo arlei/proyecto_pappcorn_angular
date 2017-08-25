@@ -1,0 +1,46 @@
+﻿[Wed, 23 Aug 2017 16:52:16 +0000] Error en consultar_cuentas: Unknown column 'cuenta_tipo.id' in 'on clause' | consulta:    SELECT  *,
+                                    (   SELECT  SUM(cuenta_transaccion.ctr_monto) 
+                                        FROM    cuenta_transaccion 
+                                        WHERE   cuenta_transaccion.ctr_cuenta = cuenta.cta_id
+                                        AND     (   cuenta_transaccion.ctr_tipo_transaccion = 1 
+                                                    OR cuenta_transaccion.ctr_tipo_transaccion = 2)
+                                    ) as entradas,
+                                    (   SELECT  SUM(cuenta_transaccion.ctr_monto) 
+                                        FROM    cuenta_transaccion 
+                                        WHERE   cuenta_transaccion.ctr_cuenta = cuenta.cta_id
+                                        AND     (   cuenta_transaccion.ctr_tipo_transaccion = 3 
+                                                    OR cuenta_transaccion.ctr_tipo_transaccion = 3)
+                                    ) as salidas,
+                                    ( SELECT tjd_numero FROM tarjeta_debito WHERE tarjeta_debito.tjd_cuenta = cuenta.cta_id LIMIT 1) AS tarjeta
+                            FROM cuenta 
+                            INNER JOIN cliente ON cliente.cte_id = cuenta.cta_cliente
+                            INNER JOIN cuenta_tipo ON cuenta_tipo.id = cuenta.cta_tipo
+[Wed, 23 Aug 2017 16:52:41 +0000] Error en consultar_cuentas: Unknown column 'cuenta_tipo.id' in 'on clause' | consulta:    SELECT  *,
+                                    (   SELECT  SUM(cuenta_transaccion.ctr_monto) 
+                                        FROM    cuenta_transaccion 
+                                        WHERE   cuenta_transaccion.ctr_cuenta = cuenta.cta_id
+                                        AND     (   cuenta_transaccion.ctr_tipo_transaccion = 1 
+                                                    OR cuenta_transaccion.ctr_tipo_transaccion = 2)
+                                    ) as entradas,
+                                    (   SELECT  SUM(cuenta_transaccion.ctr_monto) 
+                                        FROM    cuenta_transaccion 
+                                        WHERE   cuenta_transaccion.ctr_cuenta = cuenta.cta_id
+                                        AND     (   cuenta_transaccion.ctr_tipo_transaccion = 3 
+                                                    OR cuenta_transaccion.ctr_tipo_transaccion = 3)
+                                    ) as salidas,
+                                    ( SELECT tjd_numero FROM tarjeta_debito WHERE tarjeta_debito.tjd_cuenta = cuenta.cta_id LIMIT 1) AS tarjeta
+                            FROM cuenta 
+                            INNER JOIN cliente ON cliente.cte_id = cuenta.cta_cliente
+                            INNER JOIN cuenta_tipo ON cuenta_tipo.id = cuenta.cta_tipo
+[Wed, 23 Aug 2017 17:33:27 +0000] Error en consultar_ultima_tarjeta_debito: Table 'bd_papp.tarjeta' doesn't exist | consulta: consultar_ultima_tarjeta_debito
+[Wed, 23 Aug 2017 17:33:39 +0000] Error en consultar_ultima_tarjeta_debito: Table 'bd_papp.tarjeta' doesn't exist | consulta: consultar_ultima_tarjeta_debito
+[Wed, 23 Aug 2017 19:31:48 +0000] Error en asignar_tarjeta: Duplicate entry '1111-2345-6789-4814' for key 'PRIMARY' | consulta:  INSERT INTO tarjeta_debito(
+                                tjd_numero,
+                                tjd_cuenta)
+                    VALUES  ('1111-2345-6789-4814'
+                            ,4)  
+[Wed, 23 Aug 2017 19:57:45 +0000] Error en asignar_tarjeta: Duplicate entry '1111-2345-6789-6790' for key 'PRIMARY' | consulta:  INSERT INTO tarjeta_debito(
+                                tjd_numero,
+                                tjd_cuenta)
+                    VALUES  ('1111-2345-6789-6790'
+                            ,5)  
